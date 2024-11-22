@@ -49,7 +49,7 @@ public class TaskManager {
         if (task != null) {
             task.setName("Новое имя " + task.getId());
             task.setDescription("Новое описание " + task.getId());
-            task.setStatus(TaskStatus.DONE);
+            task.setStatus(task.getStatus());
             System.out.println("Задача обновлена");
         } else {
             System.out.println("Ошибка! Такой задачи нет!");
@@ -88,7 +88,7 @@ public class TaskManager {
         if (subTask != null) {
             subTask.setName("Новое имя " + subTask.getId());
             subTask.setDescription("Новое описание " + subTask.getId());
-            subTask.setStatus(TaskStatus.DONE);
+            subTask.setStatus(subTask.getStatus());
             updateEpicStatus(subTask.getEpicId());
             System.out.println("Подзадача обновлена");
         } else {
@@ -148,24 +148,20 @@ public class TaskManager {
     }
 
     public void removeEpicById(int id) {
-        Epic epic = epics.get(id);
+        Epic epic = epics.remove(id);
         ArrayList<SubTask> linkedSubtasks = epic.getLinkedSubtasks();
         for (SubTask subTask : linkedSubtasks) {
             subTasks.remove(subTask.getId());
         }
-        linkedSubtasks.clear();
-        epics.remove(id);
         System.out.println("Эпик удален");
     }
 
     public void removeSubTaskById(int id) {
-        SubTask subTask = subTasks.get(id);
-        int epicId = subTask.getEpicId();
-        Epic epic = epics.get(epicId);
+        SubTask subTask = subTasks.remove(id);
+        Epic epic = epics.get(subTask.getEpicId());
         ArrayList<SubTask> linkedSubtasks = epic.getLinkedSubtasks();
         linkedSubtasks.remove(id);
-        subTasks.remove(id);
-        updateEpicStatus(epicId);
+        updateEpicStatus(subTask.getEpicId());
         System.out.println("Подзадача удалена");
     }
 
