@@ -1,5 +1,6 @@
-package manager;
+package manager.InMemory;
 
+import manager.TaskManager;
 import task.Epic;
 import task.SubTask;
 import task.Task;
@@ -11,11 +12,11 @@ import java.util.ArrayList;
 public class InMemoryTaskManager implements TaskManager {
     int counter = 1;
 
+    InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+
     private HashMap<Integer, Task> tasks;
     private HashMap<Integer, Epic> epics;
     private HashMap<Integer, SubTask> subTasks;
-
-    private ArrayList<Task> browsingHistory = new ArrayList<>(10);
 
     public InMemoryTaskManager() {
         tasks = new HashMap<>();
@@ -146,28 +147,19 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int id) {
-        if (browsingHistory.size() == 10) {
-            browsingHistory.remove(1);
-        }
-        browsingHistory.add(tasks.get(id));
+        historyManager.add(tasks.get(id));
         return tasks.get(id);
     }
 
     @Override
     public Epic getEpicById(int id) {
-        if (browsingHistory.size() == 10) {
-            browsingHistory.remove(1);
-        }
-        browsingHistory.add(epics.get(id));
+        historyManager.add(epics.get(id));
         return epics.get(id);
     }
 
     @Override
     public SubTask getSubTaskById(int id) {
-        if (browsingHistory.size() == 10) {
-            browsingHistory.remove(1);
-        }
-        browsingHistory.add(subTasks.get(id));
+        historyManager.add(subTasks.get(id));
         return subTasks.get(id);
     }
 
@@ -205,6 +197,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public ArrayList<Task> getHistory() {
-        return browsingHistory;
+        return historyManager.getHistory();
     }
 }
