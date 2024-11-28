@@ -1,6 +1,6 @@
 package main;
 
-import manager.InMemory.InMemoryTaskManager;
+import manager.InMemoryTaskManager;
 import task.Epic;
 import task.SubTask;
 import task.Task;

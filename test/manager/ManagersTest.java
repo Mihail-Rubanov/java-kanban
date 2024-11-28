@@ -1,6 +1,6 @@
 package manager;
 
-import manager.InMemory.InMemoryTaskManager;
+import history.HistoryManager;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,21 +14,21 @@ class ManagersTest {
 
     @Test
     void managerDoGetDefaultTest() {
-        TaskManager manager1 = Managers.getDefault();
-        HistoryManager manager2 = Managers.getDefaultHistory();
+        TaskManager taskManager = Managers.getDefault();
+        HistoryManager historyManager = Managers.getDefaultHistory();
         Task task1 = new Task("name1","des1", TaskStatus.DONE);
-        manager1.createTask(task1);
-        manager2.add(task1);
+        taskManager.createTask(task1);
+        historyManager.add(task1);
         ArrayList<Task> testList = new ArrayList<>();
         testList.add(task1);
 
-        assertEquals(task1, manager1.getTaskById(1));
-        assertEquals(testList, manager2.getHistory());
+        assertEquals(task1, taskManager.getTaskById(1));
+        assertEquals(testList, historyManager.getHistory());
     }
 
     @Test
     void taskManagerSaveAllTasksTypeAndCanGetThemById() {
-        InMemoryTaskManager manager1 = Managers.getDefault();
+        TaskManager manager1 = Managers.getDefault();
         Task task1 = new Task("name1","des1", TaskStatus.DONE);
         Epic epic1 = new Epic("name2","des2");
         SubTask subTask1 = new SubTask("name3","des3", TaskStatus.IN_PROGRESS, 2);

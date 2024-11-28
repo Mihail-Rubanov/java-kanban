@@ -1,19 +1,19 @@
-package manager.InMemory;
+package manager;
 
-import org.junit.jupiter.api.Test;
+import history.HistoryManager;
 import task.Epic;
 import task.SubTask;
 import task.Task;
 import task.TaskStatus;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
 
-    InMemoryTaskManager taskManager = new InMemoryTaskManager();
-    InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+    private final TaskManager taskManager = Managers.getDefault();
 
     @Test
     void createTaskTest() {
@@ -26,7 +26,7 @@ class InMemoryTaskManagerTest {
         assertNotNull(savedTask, "Задача не найдена.");
         assertEquals(task, savedTask, "Задачи не совпадают.");
 
-        final ArrayList<Task> tasks = taskManager.getTasksList();
+        final List<Task> tasks = taskManager.getTasksList();
 
         assertNotNull(tasks, "Задачи не возвращаются.");
         assertEquals(1, tasks.size(), "Неверное количество задач.");
@@ -46,7 +46,7 @@ class InMemoryTaskManagerTest {
 
 
     @Test
-    void EpicsEqualsBySameIdTest() {
+    void epicsEqualsBySameIdTest() {
         Epic epic1 = new Epic("name1","des1");
         epic1.setId(1);
         Task epic2 = new Epic("name2","des2");
