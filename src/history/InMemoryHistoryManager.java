@@ -8,7 +8,7 @@ import java.util.List;
 import static java.util.List.copyOf;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final int HISTORY_LIMIT = 10;
+    private static final int HISTORY_LIMIT = 10;
 
     private final List<Task> history = new LinkedList<>();
 

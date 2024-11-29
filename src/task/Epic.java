@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Arrays;
 
 public class Epic extends Task {
-    private List <SubTask> linkedSubtasks;
+    private final List <SubTask> linkedSubtasks;
 
     public Epic(String name, String description) {
         super(name, description, TaskStatus.NEW);

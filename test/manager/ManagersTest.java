@@ -9,6 +9,7 @@ import task.SubTask;
 import task.Task;
 import task.TaskStatus;
 import java.util.ArrayList;
+import java.util.List;
 
 class ManagersTest {
 
@@ -19,7 +20,7 @@ class ManagersTest {
         Task task1 = new Task("name1","des1", TaskStatus.DONE);
         taskManager.createTask(task1);
         historyManager.add(task1);
-        ArrayList<Task> testList = new ArrayList<>();
+        List<Task> testList = new ArrayList<>();
         testList.add(task1);
 
         assertEquals(task1, taskManager.getTaskById(1));

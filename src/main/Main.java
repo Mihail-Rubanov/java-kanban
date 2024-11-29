@@ -1,6 +1,7 @@
 package main;
 
-import manager.InMemoryTaskManager;
+import manager.Managers;
+import manager.TaskManager;
 import task.Epic;
 import task.SubTask;
 import task.Task;
@@ -9,7 +10,7 @@ import task.TaskStatus;
 public class Main {
     public static void main(String[] args) {
 
-        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        TaskManager taskManager = Managers.getDefault();
         Task task1 = new Task("Переезд", "Собрать вещи", TaskStatus.NEW);
         Task task2 = new Task("Уборка", "Выкинуть мусор", TaskStatus.NEW);
         Epic epic1 = new Epic("Стать легенодой в Java", "Сдать все проекты к жёсткому дэдлайну");
