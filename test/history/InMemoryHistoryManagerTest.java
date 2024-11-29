@@ -3,12 +3,9 @@ package history;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.Test;
-import task.Epic;
-import task.SubTask;
 import task.Task;
 import task.TaskStatus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
