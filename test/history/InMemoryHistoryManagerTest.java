@@ -1,5 +1,6 @@
 package history;
 
+import manager.InMemoryTaskManager;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,10 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void addTaskInHistory() {
-        Task task = new Task("taskname","taskdescription",TaskStatus.IN_PROGRESS);
+
         HistoryManager historyManager = Managers.getDefaultHistory();
+
+        Task task = new Task("taskname","taskdescription",TaskStatus.IN_PROGRESS);
         historyManager.add(task);
         final List<Task> history = historyManager.getHistory();
         assertNotNull(history, "История не пустая.");
@@ -23,17 +26,35 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void historyLimitIsWorking() {
-        final int HISTORY_LIMIT = 10;
+    void historyBecomeUnlimited() {
 
         TaskManager taskManager = Managers.getDefault();
 
-        for (int i = 1; i <= 11; i++) {
+        for (int i = 1; i <= 20; i++) {
             Task task = new Task("name" + i, "des" + i, TaskStatus.NEW);
             taskManager.createTask(task);
             taskManager.getTaskById(task.getId());
         }
 
+        assertEquals(20, taskManager.getHistory().size());
+    }
+
+    @Test
+    void historyWithoutRepeats() {
+        TaskManager taskManager = Managers.getDefault();
+
+        for (int i = 1; i <= 10; i++) {
+            Task task = new Task("name" + i, "des" + i, TaskStatus.NEW);
+            taskManager.createTask(task);
+            taskManager.getTaskById(task.getId());
+        }
+
+        for (int i = 1; i <= 5; i++) {
+            taskManager.getTaskById(i);
+            System.out.println("прсмотр " + i + " есть");
+        }
+
+        System.out.println(taskManager.getHistory());
         assertEquals(10, taskManager.getHistory().size());
     }
 }
