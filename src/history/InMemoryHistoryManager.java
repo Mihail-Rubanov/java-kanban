@@ -21,8 +21,8 @@ public class InMemoryHistoryManager implements HistoryManager {
             return;
         }
         if (historyNodesMap.containsKey(task.getId())) {
-            Map<Integer, Node<Task>> IterableNodesMap = new HashMap<>(historyNodesMap);
-            for (Integer i : IterableNodesMap.keySet()) {
+            Map<Integer, Node<Task>> iterableNodesMap = new HashMap<>(historyNodesMap);
+            for (Integer i : iterableNodesMap.keySet()) {
                 if (i == task.getId()) {
                     removeNode(historyNodesMap.get(i));
                     linkLast(task);
