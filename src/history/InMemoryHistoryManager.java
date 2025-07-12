@@ -16,7 +16,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     public static class HandMadeLinkedList<E> {
         private Node<E> head;
         private Node<E> tail;
-        int size = 0;
+        private int size = 0;
     }
 
     private void linkLast(Task task) {
