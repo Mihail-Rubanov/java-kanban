@@ -122,12 +122,18 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeAllTasks() {
+        for (Task task : tasks.values()) {
+            removeFromHistory(task.getId());
+        }
         tasks.clear();
     }
 
     @Override
     public void removeAllEpics() {
-        subTasks.clear();
+        removeAllSubTasks();
+        for (Epic epic : epics.values()) {
+            removeFromHistory(epic.getId());
+        }
         epics.clear();
     }
 
@@ -138,6 +144,7 @@ public class InMemoryTaskManager implements TaskManager {
                 List<SubTask> linkedSubtasks = epic.getLinkedSubtasks();
                 if (linkedSubtasks.contains(subTask)) {
                     linkedSubtasks.remove(subTask);
+                    removeFromHistory(subTask.getId());
                     updateEpicStatus(subTask.getEpicId());
                 }
             }
@@ -166,6 +173,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeTaskById(int id) {
         tasks.remove(id);
+        removeFromHistory(id);
         System.out.println("Задача удалена");
     }
 
@@ -175,7 +183,9 @@ public class InMemoryTaskManager implements TaskManager {
         List<SubTask> linkedSubtasks = epic.getLinkedSubtasks();
         for (SubTask subTask : linkedSubtasks) {
             subTasks.remove(subTask.getId());
+            removeFromHistory(subTask.getId());
         }
+        removeFromHistory(id);
         System.out.println("Эпик удален");
     }
 
@@ -185,6 +195,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epics.get(subTask.getEpicId());
         List<SubTask> linkedSubtasks = epic.getLinkedSubtasks();
         linkedSubtasks.remove(id);
+        removeFromHistory(id);
         updateEpicStatus(subTask.getEpicId());
         System.out.println("Подзадача удалена");
     }
@@ -198,5 +209,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
+    }
+
+    @Override
+    public void removeFromHistory(int id) {
+        historyManager.remove(id);
     }
 }
